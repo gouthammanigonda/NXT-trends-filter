@@ -134,10 +134,18 @@ class AllProductsSection extends Component {
     this.setState({activeOptionId}, this.getProducts)
   }
 
-  renderProductsList = () => {
-    const {productsList, activeOptionId} = this.state
+  renderNoProductsView = () => (
+    <div>
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/nxt-trendz/nxt-trendz-no-products-view.png"
+        alt="no products"
+        className="no-products-img"
+      />
+    </div>
+  )
 
-    // TODO: Add No Products View
+  renderProductsView = () => {
+    const {productsList, activeOptionId} = this.state
     return (
       <div>
         <div className="all-products-container">
@@ -158,6 +166,19 @@ class AllProductsSection extends Component {
     )
   }
 
+  renderProductsList = () => {
+    const {productsList} = this.state
+
+    // TODO: Add No Products View
+    return (
+      <div>
+        {productsList.length > 0
+          ? this.renderProductsView()
+          : this.renderFailureView()}
+      </div>
+    )
+  }
+
   renderLoader = () => (
     <div className="products-loader-container">
       <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
@@ -166,7 +187,7 @@ class AllProductsSection extends Component {
 
   // TODO: Add failure view
   renderFailureView = () => (
-    <div>
+    <div className="failureView">
       <div>
         <img
           src="https://assets.ccbp.in/frontend/react-js/nxt-trendz/nxt-trendz-products-error-view.png"
@@ -179,7 +200,7 @@ class AllProductsSection extends Component {
   )
 
   renderAllProducts = () => {
-    const {apiStatus} = this.props
+    const {apiStatus} = this.state
     console.log('ok')
 
     switch (apiStatus) {
@@ -228,7 +249,12 @@ class AllProductsSection extends Component {
   }
 
   render() {
-    const {activeCategoryId, activeRatingId, apiStatus} = this.state
+    const {
+      activeCategoryId,
+      activeRatingId,
+      apiStatus,
+      activeInputText,
+    } = this.state
     console.log(apiStatus)
     return (
       <div className="all-products-section">
@@ -243,6 +269,7 @@ class AllProductsSection extends Component {
           activeRatingId={activeRatingId}
           changeClearFilterStatus={this.changeClearFilterStatus}
           onClickFilter={this.onClickFilter}
+          activeInputText={activeInputText}
         />
         {this.renderAllProducts()}
       </div>

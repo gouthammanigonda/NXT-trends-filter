@@ -45,7 +45,7 @@ const FiltersGroup = props => {
             >
               <img
                 src={each.imageUrl}
-                alt={each.ratingId}
+                alt={`rating ${each.ratingId}`}
                 className="rating-img"
               />
               <span className={`category span-ele ${isActive}`}>&up</span>
@@ -66,6 +66,8 @@ const FiltersGroup = props => {
     onClickFilter()
   }
 
+  const {activeInputText} = props
+
   return (
     <div className="filters-group-container">
       <input
@@ -73,13 +75,14 @@ const FiltersGroup = props => {
         type="search"
         placeholder="search"
         className="input"
+        value={activeInputText}
       />
       {renderCategorySession()}
       {renderRatingSession()}
 
       <div>
         <button className="button" type="button" onClick={clearFilter}>
-          Clear Filter
+          Clear Filters
         </button>
       </div>
     </div>
